@@ -132,3 +132,4 @@ main_dispatcher.py
 - 提交规范与要求：
   - 推荐采用 Conventional Commits（如 `feat: 添加渲染重试机制`、`fix: 修复 OSS 预签名过期计算`）
   - 在 PR 中附带变更说明、接口影响、测试结果与风险评估
+  - 
