@@ -31,10 +31,11 @@ def upload_to_oss(object_key: str, local_path: Path) -> str:
     bucket = oss2.Bucket(auth, OSS_ENDPOINT, OSS_BUCKET)
     with local_path.open("rb") as f:
         bucket.put_object(object_key, f)
-    # 返回预签�?URL（私有桶也可用），按配置的过期秒�?    try:
+    # 返回预签名 URL（私有桶也可用），按配置的过期秒数
+    try:
         presigned = bucket.sign_url('GET', object_key, OSS_URL_EXPIRES)
-        # 对签�?URL 的查询参数进行安全编码，确保 + 等特殊字符被正确处理
-        # 这对�?Android 真机等严格环境很重要
+        # 对签名 URL 的查询参数进行安全编码，确保 + 等特殊字符被正确处理
+        # 这对于 Android 真机等严格环境很重要
         parts = urlsplit(presigned)
         query_params = parse_qs(parts.query, keep_blank_values=True)
         # 重新编码查询参数，确保特殊字符如 + 被编码为 %2B

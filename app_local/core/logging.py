@@ -4,10 +4,10 @@ from datetime import datetime
 from pathlib import Path
 from app_local.core.config import OUTPUT_DIR
 
-# 日志初始化：统一设置格式和级别，输出�?stdout；可扩展文件输出
+# 日志初始化：统一设置格式和级别，输出到 stdout；可扩展文件输出
 
 logger.remove()
-logger.add(sys.stdout, level="INFO", 
+logger.add(sys.stdout, level="INFO",
            format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>")
 
 _log_dir: Path = OUTPUT_DIR / "log"

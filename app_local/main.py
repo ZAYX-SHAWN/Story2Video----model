@@ -34,7 +34,7 @@ try:
     from app_local.core.config import OUTPUT_DIR
     app.mount("/static", StaticFiles(directory=str(OUTPUT_DIR), html=False), name="static")
 except Exception as e:
-    logger.error(f"静态目录挂载失�? {e}")
+    logger.error(f"静态目录挂载失败: {e}")
 
 
 @app.exception_handler(RequestValidationError)

@@ -38,7 +38,7 @@ def save_story_shots(user_id: str, story_id: str, shots: List[Dict[str, Any]]) -
     path = OUTPUT_DIR / user_id / story_id / "json" / "shots.json"
     payload = {"story_id": story_id, "shots": shots}
     _atomic_write(path, payload)
-    logger.info(f"Shots 保存: {user_id}/{story_id} -> {len(shots)} 个分�?)
+    logger.info(f"Shots 保存: {user_id}/{story_id} -> {len(shots)} 个分镜")
 
 
 def upsert_shot(user_id: str, story_id: str, shot_id: str, shot: Dict[str, Any]) -> None:
@@ -63,16 +63,17 @@ def update_story_video_url(user_id: str, story_id: str, url: str) -> None:
 def get_story_shots(user_id: str, story_id: str) -> List[Dict[str, Any]]:
     path = OUTPUT_DIR / user_id / story_id / "json" / "shots.json"
     if not path.exists():
-        logger.warning(f"Story 分镜文件不存�? {user_id}/{story_id}")
+        logger.warning(f"Story 分镜文件不存在: {user_id}/{story_id}")
         return []
     try:
         text = path.read_text(encoding="utf-8")
         data = json.loads(text)
-        # 兼容两种结构：旧版纯数组、新版带 shots 字段的对�?        if isinstance(data, list):
-            logger.info(f"Shots 加载(数组格式): {user_id}/{story_id} -> {len(data)} 个分�?)
+        # 兼容两种结构：旧版纯数组、新版带 shots 字段的对象
+        if isinstance(data, list):
+            logger.info(f"Shots 加载(数组格式): {user_id}/{story_id} -> {len(data)} 个分镜")
             return data
         shots = data.get("shots", []) if isinstance(data, dict) else []
-        logger.info(f"Shots 加载: {user_id}/{story_id} -> {len(shots)} 个分�?)
+        logger.info(f"Shots 加载: {user_id}/{story_id} -> {len(shots)} 个分镜")
         return shots
     except Exception as e:
         logger.error(f"Shots 加载失败: {user_id}/{story_id}, err={e}")
