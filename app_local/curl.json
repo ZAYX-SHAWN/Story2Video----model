@@ -1,0 +1,26 @@
+curl --location --request POST 'https://app-api.pixverseai.cn/openapi/v2/image/upload' \
+--header 'API-KEY: your-api-key' \
+--header 'Ai-trace-id: {{$string.uuid}}' \
+--form 'image=@""' \
+--form 'image_url=""'
+
+
+curl --location --request POST 'https://app-api.pixverseai.cn/openapi/v2/video/img/generate' \
+--header 'Ai-trace-id: {{$string.uuid}}' \
+--header 'API-KEY: your-api-key' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "duration": 5,
+    "img_id": 1,
+    "model": "v5.5",
+    "motion_mode": "normal",
+    "prompt": "string",
+    "quality": "540p",
+    "seed": 0,
+    "sound_effect_switch": true,
+    "lip_sync_tts_switch": false,
+    "lip_sync_tts_content": "你好",
+    "generate_audio_switch": true,
+    "generate_multi_clip_switch": false,
+    "thinking_type": "enable"
+}'
